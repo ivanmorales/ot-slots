@@ -1,9 +1,11 @@
 const Book = (props) => {
-  const { data, withFire } = props;
+  const { book, withFire, shareData } = props;
+
+  shareData({ book });
 
   return (
     <strong>
-      {data.name} {withFire && "🍔"}
+      {book.name} {withFire && "🍔"}
     </strong>
   );
 };

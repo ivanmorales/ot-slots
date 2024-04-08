@@ -1,51 +1,61 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 
 import Book from "./components/Book";
 import Line from "./components/Line";
 import LineButton from "./components/LineButton";
 
+const LINE_TEMPLATE = {
+  id: 1,
+  adjust: -4,
+  price: -110,
+  lastUpdate: Date.now(),
+};
+
 const book = {
   name: "Fanduel",
 };
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [line, setLine] = useState({
-    adjust: -4,
-    price: -110,
-    lastUpdate: Date.now(),
+  const [line1, setLine1] = useState({ ...LINE_TEMPLATE });
+  const [line2, setLine2] = useState({
+    ...LINE_TEMPLATE,
+    id: 2,
+    adjust: 13,
+    price: -112,
   });
-
-  function updateLine() {
-    setLine({
-      ...line,
+  function updateLine1() {
+    setLine1({
+      ...line1,
+      adjust: -5,
+      lastUpdate: Date.now(),
+    });
+  }
+  function updateLine2() {
+    setLine2({
+      ...line2,
+      price: -115,
       lastUpdate: Date.now(),
     });
   }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
       <h1>Vite + React</h1>
-      <button onMouseDown={updateLine}>Update Line</button>
+      <button onMouseDown={updateLine1}>Update Line1</button>
+      <button onMouseDown={updateLine2}>Update Line2</button>
       <div className="card">
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
+      <LineButton key={line1.id}>
+        <Book book={book} slot="book" />
+        <Line data={line1} slot="line" />
+      </LineButton>
       <LineButton>
-        <Book data={book} />
-        <Line data={line} />
+        <Book book={book} slot="book" />
+        <Line data={line2} slot="line" />
       </LineButton>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
